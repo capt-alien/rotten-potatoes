@@ -3,17 +3,24 @@
 var exphbs = require('express-handlebars');
 const express = require('express')
 const app = express()
+// INITIALIZE BODY-PARSER AND ADD IT TO APP
+const bodyParser = require('body-parser');
+//connects to mongo database
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/rotten-potatoes', { useNewUrlParser: true });
+
+const Review = mongoose.model('Review', {
+  title: String,
+  description: String,
+  movieTitle: String
+});
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 
-
-// // OUR MOCK ARRAY OF PROJECTS
-// let reviews = [
-//   { title: "Great Review" },
-//   { title: "Next Review" }
-// ]
+// The following line must appear AFTER const app = express() and before your routes!
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // INDEX
 app.get('/', (req, res) => {
@@ -35,10 +42,17 @@ app.listen(3000, () => {
 })
 
 
-//connects to mongo database
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/rotten-potatoes', { useNewUrlParser: true });
+// CREATE
+app.post('/reviews', (req, res) => {
+  Review.create(req.body).then((review) => {
+    console.log(review);
+    res.redirect('/');
+  }).catch((err) => {
+    console.log(err.message);
+  })
+})
 
-const Review = mongoose.model('Review', {
-  title: String
-});
+// NEW
+app.get('/reviews/new', (req, res) => {
+  res.render('reviews-new', {});
+})
