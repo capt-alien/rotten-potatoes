@@ -1,37 +1,7 @@
 <!-- views/reviews-new.handlebars -->
 
 <form method="POST" action="/reviews">
-  <fieldset>
-    <legend>New Review</legend>
-    <!-- TITLE -->
-    <p>
-      <label for="review-title">Title</label><br>
-      <input id="review-title" type="text" name="title" />
-    </p>
-
-    <!-- MOVIE TITLE -->
-    <p>
-      <label for="movie-title">Movie Title</label><br>
-      <input id="movie-title" type="text" name="movieTitle" />
-    </p>
-    <!-- Rating -->
-    <p>
-        <label>Rating</label>
-            <select id = "rateing">
-              <option value = "1">🥔</option>
-              <option value = "2">🥔🥔 </option>
-              <option value = "3">🥔🥔🥔 </option>
-              <option value = "4">🥔🥔🥔🥔 </option>
-              <option value = "5">🥔🥔🥔🥔🥔</option>
-            </select>
-
-    <p>
-    <!-- DESCRIPTION -->
-    <p>
-      <label for="description-text">Description</label><br>
-      <textarea id="description-text" name="description" rows="10" /></textarea>
-    </p>
-  </fieldset>
+  {{> reviews-form}}
 
   <!-- BUTTON -->
   <p>
@@ -39,3 +9,17 @@
   </p>
 
 </form>
+
+
+
+
+<!-- <p>
+    <label>Rating</label>
+        <select id = "rateing">
+          <option value = "1">🥔</option>
+          <option value = "2">🥔🥔 </option>
+          <option value = "3">🥔🥔🥔 </option>
+          <option value = "4">🥔🥔🥔🥔 </option>
+          <option value = "5">🥔🥔🥔🥔🥔</option>
+        </select>
+<p> -->

@@ -2,6 +2,8 @@
 
 var exphbs = require('express-handlebars');
 const express = require('express')
+const methodOverride = require('method-override')
+
 const app = express()
 // INITIALIZE BODY-PARSER AND ADD IT TO APP
 const bodyParser = require('body-parser');
@@ -14,9 +16,12 @@ const Review = mongoose.model('Review', {
   description: String,
   movieTitle: String
 });
+// override with POST having ?_method=DELETE or ?_method=PUT
+app.use(methodOverride('_method'))
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
+
 
 
 // The following line must appear AFTER const app = express() and before your routes!
@@ -37,9 +42,11 @@ app.get('/', (req, res) => {
   res.render('reviews-index', { reviews: reviews });
 })
 
-//listen
-app.listen(3000, () => {
-  console.log('App listening on port 3000!')
+// EDIT
+app.get('/reviews/:id/edit', (req, res) => {
+  Review.findById(req.params.id, function(err, review) {
+    res.render('reviews-edit', {review: review});
+  })
 })
 
 
@@ -58,6 +65,17 @@ app.get('/reviews/new', (req, res) => {
   res.render('reviews-new', {});
 })
 
+// UPDATE
+app.put('/reviews/:id/edit', (req, res) => {
+  Review.findByIdAndUpdate(req.params.id, req.body)
+    .then(review => {
+      res.redirect(`/reviews/${review._id}`)
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
+})
+
 // SHOW
 app.get('/reviews/:id', (req, res) => {
     // params => URL PARAMETERS
@@ -67,4 +85,8 @@ app.get('/reviews/:id', (req, res) => {
   }).catch((err) => {
     console.log(err.message);
   })
+})
+//listen
+app.listen(3000, () => {
+  console.log('App listening on port 3000!')
 })
