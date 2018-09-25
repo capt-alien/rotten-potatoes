@@ -65,7 +65,7 @@ app.get('/reviews/new', (req, res) => {
   res.render('reviews-new', {});
 })
 
-// UPDATE
+// UPDATE/single.review
 app.put('/reviews/:id', (req, res) => {
   Review.findByIdAndUpdate(req.params.id, req.body)
     .then(review => {
@@ -86,6 +86,17 @@ app.get('/reviews/:id', (req, res) => {
     console.log(err.message);
   })
 })
+// DELETE
+app.delete('/reviews/:id', function (req, res) {
+  console.log("DELETE review")
+  Review.findByIdAndRemove(req.params.id).then((review) => {
+    res.redirect('/');
+  }).catch((err) => {
+    console.log(err.message);
+  })
+})
+
+
 //listen
 app.listen(3000, () => {
   console.log('App listening on port 3000!')
