@@ -6,9 +6,9 @@ const mongoose = require('mongoose'); // once was const or var...let is used
 const exphbs = require('express-handlebars');
 const app = express(); // include express.js stuff... adding dots after app (eg app.???)!
 
-const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/rotten-potatoes';
 const port = process.env.PORT || 3000;
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/rotten-potatoes'
+
 // MIDDLEWARE
 mongoose.connect(mongoUri, { useNewUrlParser: true });
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -22,7 +22,7 @@ const movies = require('./controllers/movies')(app); // initialize movies
 const comments = require('./controllers/comments')(app); // initialize movies
 
 //listen
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log('App listening on port 3000!')
 })
 
