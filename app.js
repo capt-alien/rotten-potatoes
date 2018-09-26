@@ -8,11 +8,11 @@ const app = express(); // include express.js stuff... adding dots after app (eg 
 
 const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/rotten-potatoes';
 const port = process.env.PORT || 3000;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/rotten-potatoes');
+// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/rotten-potatoes');
 
-
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/rotten-potatoes'
 // MIDDLEWARE
-mongoose.connect('mongodb://localhost/rotten-potatoes', { useNewUrlParser: true });
+mongoose.connect(mongoUri, { useNewUrlParser: true });
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 app.use(methodOverride('_method'))
